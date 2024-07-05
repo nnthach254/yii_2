@@ -1,5 +1,10 @@
 <?php
 
+use Symfony\Component\Dotenv\Dotenv;
+
+$dotenv = new Dotenv();
+$dotenv->load(__DIR__ . '/../.env'); 
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 

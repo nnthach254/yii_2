@@ -32,10 +32,9 @@ class Contact extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'email', 'subject', 'body', 'verifyCode'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
-            [['name', 'email', 'subject', 'body', 'verifyCode'], 'string', 'max' => 255],
-            [['email'], 'unique'],
+            [['name', 'email', 'subject', 'body'], 'required'],
+            ['email', 'email'],
+            [['name', 'email', 'subject', 'body'], 'string', 'max' => 255],
         ];
     }
 
@@ -50,9 +49,6 @@ class Contact extends \yii\db\ActiveRecord
             'email' => 'Email',
             'subject' => 'Subject',
             'body' => 'Body',
-            'verifyCode' => 'Verify Code',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
         ];
     }
 }
