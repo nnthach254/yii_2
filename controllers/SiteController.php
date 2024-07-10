@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\EntryForm;
 use app\models\Contact;
+
 class SiteController extends Controller
 {
     /**
@@ -110,15 +111,30 @@ class SiteController extends Controller
         $model = new Contact();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
+            // Gửi email
+            if ($this->sendEmail($model)) {
+                Yii::$app->session->setFlash('success', 'Email has been sent successfully!');
+            } else {
+                Yii::$app->session->setFlash('error', 'Failed to send email.');
+            }
+    
             return $this->refresh();
         }
-
+    
         return $this->render('contact', [
             'model' => $model,
         ]);
     }
+
+    protected function sendEmail($model)
+{
+    return Yii::$app->mailer->compose()
+        ->setFrom(['thach.nguyen@beready.academy' => 'Nguyễn Ngọc Thạch'])
+        ->setTo($model->email)
+        ->setSubject($model->subject)
+        ->setTextBody($model->body)
+        ->send();
+}
 
     /**
      * Displays about page.
@@ -150,5 +166,8 @@ class SiteController extends Controller
             return $this->render('entry', ['model' => $model]);
         }
     }
+
+  
+        
     
 }
