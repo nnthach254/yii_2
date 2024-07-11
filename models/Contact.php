@@ -51,4 +51,14 @@ class Contact extends \yii\db\ActiveRecord
             'body' => 'Body',
         ];
     }
+    
+    public function sendEmail($model)
+    {
+        return Yii::$app->mailer->compose()
+            ->setFrom(['thach.nguyen@beready.academy' => 'Nguyễn Ngọc Thạch'])
+            ->setTo($model->email)
+            ->setSubject($model->subject)
+            ->setTextBody($model->body)
+            ->send();
+    }
 }

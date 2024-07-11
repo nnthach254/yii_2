@@ -110,31 +110,23 @@ class SiteController extends Controller
         // $model = new ContactForm();
         $model = new Contact();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // Gửi email
-            if ($this->sendEmail($model)) {
-                Yii::$app->session->setFlash('success', 'Email has been sent successfully!');
-            } else {
-                Yii::$app->session->setFlash('error', 'Failed to send email.');
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                // Cố gắng gửi email
+                if ($model->sendEmail($model)) { // Lưu ý sửa đổi ở đây
+                    Yii::$app->session->setFlash('success', 'Email đã được gửi thành công!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Gửi email thất bại.');
+                }
+
+                return $this->refresh();
             }
-    
-            return $this->refresh();
-        }
-    
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
+
+            return $this->render('contact', [
+                'model' => $model,
+            ]);
     }
 
-    protected function sendEmail($model)
-{
-    return Yii::$app->mailer->compose()
-        ->setFrom(['thach.nguyen@beready.academy' => 'Nguyễn Ngọc Thạch'])
-        ->setTo($model->email)
-        ->setSubject($model->subject)
-        ->setTextBody($model->body)
-        ->send();
-}
+
 
     /**
      * Displays about page.

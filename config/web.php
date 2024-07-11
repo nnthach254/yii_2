@@ -1,9 +1,10 @@
 <?php
 
-use Symfony\Component\Dotenv\Dotenv;
 
+use Symfony\Component\Dotenv\Dotenv;
 $dotenv = new Dotenv();
-$dotenv->load(__DIR__ . '/../.env'); 
+
+
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -38,9 +39,9 @@ $config = [
             'transport' => [
                 'scheme' => 'smtp',
                 'host' => 'smtp.gmail.com',
-                'username' => 'thach.nguyen@beready.academy',
+                'username' => $params['username_stmp_email'],
                 'password' => $params['password_stmp_email'],
-                'port' => 587,
+                'port' => '587',
                 'encryption' => 'tls',
             ],
             'messageConfig' => [
