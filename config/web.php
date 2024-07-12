@@ -1,11 +1,5 @@
 <?php
 
-
-use Symfony\Component\Dotenv\Dotenv;
-$dotenv = new Dotenv();
-
-
-
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -31,7 +25,16 @@ $config = [
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
-        ],
+        ], 
+        
+        'queue' => [
+        'class' => \yii\queue\db\Queue::class,
+        'db' => 'db', 
+        'tableName' => '{{%queue}}', // Table name
+        'channel' => 'default', // Queue channel key
+        'mutex' => \yii\mutex\MysqlMutex::class, // Mutex used to sync queries
+        ], 
+
         'mailer' => [
             'class' => \yii\symfonymailer\Mailer::class,
             'viewPath' => '@app/mail',
