@@ -3,9 +3,9 @@
 
 return [
    'class' => 'yii\db\Connection',
-   'dsn' => 'mysql:host=' . $_ENV['MYSQL_HOST'] . ';dbname=' . $_ENV['MYSQL_NAME'],
-   'username' => $_ENV['MYSQL_USER'],
-   'password' => $_ENV['MYSQL_PASS'],
+   'dsn' => 'mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_NAME'),
+   'username' => getenv('MYSQL_USER'),
+   'password' => getenv('MYSQL_PASS'),
    'charset' => 'utf8',
 
     // Schema cache options (for production environment)
